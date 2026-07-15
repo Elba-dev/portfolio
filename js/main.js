@@ -35,7 +35,7 @@ if (hamburger && navList) {
 /* ─── Typing Effect (index only) ────────── */
 const typingEl = document.getElementById("typing");
 if (typingEl) {
-  const phrases = ["System Developer.", "Python Developer.", "Web Designer.", "Problem Solver."];
+  const phrases = ["Backend Engineer.", "Django Developer.", "React Integration.", "Systems Builder."];
   let phraseIdx = 0, charIdx = 0, deleting = false;
 
   function type() {

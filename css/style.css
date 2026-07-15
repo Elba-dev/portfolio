@@ -861,3 +861,8 @@ h1 em {
   .footer { padding: 1.5rem; }
   .cta-band-inner { flex-direction: column; align-items: flex-start; }
 }
+
+/* Hide custom cursor on mobile and touch devices */
+@media (max-width: 768px) or (pointer: coarse) {
+  .cursor { display: none !important; }
+}
