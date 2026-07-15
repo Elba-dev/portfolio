@@ -34,15 +34,8 @@
 
   <section class="section contact-grid">
     <div class="contact-info fade-up">
-      <p class="contact-sub">Open to freelance, full-time roles, and interesting collaborations. Reach out and let's talk.</p>
+      <p class="contact-sub">Open to freelance projects, backend systems building, and interesting collaborations. Reach out directly.</p>
       <div class="contact-platforms">
-        <a class="platform-card gmail" href="mailto:oumaelba7@gmail.com">
-          <span class="platform-icon">G</span>
-          <span class="platform-meta">
-            <span class="platform-name">Gmail</span>
-            <span class="platform-value">oumaelba7@gmail.com</span>
-          </span>
-        </a>
         <a class="platform-card whatsapp" href="https://wa.me/254746324708" target="_blank" rel="noopener">
           <span class="platform-icon">W</span>
           <span class="platform-meta">
@@ -53,15 +46,22 @@
         <a class="platform-card phone" href="tel:+254746324708">
           <span class="platform-icon">P</span>
           <span class="platform-meta">
-            <span class="platform-name">Call</span>
+            <span class="platform-name">Call (Primary)</span>
             <span class="platform-value">0746324708</span>
           </span>
         </a>
         <a class="platform-card phone" href="tel:+254759282229">
           <span class="platform-icon">P</span>
           <span class="platform-meta">
-            <span class="platform-name">Call</span>
+            <span class="platform-name">Call (Secondary)</span>
             <span class="platform-value">0759282229</span>
+          </span>
+        </a>
+        <a class="platform-card github" href="https://github.com/Elba-programmer" target="_blank" rel="noopener">
+          <span class="platform-icon">G</span>
+          <span class="platform-meta">
+            <span class="platform-name">GitHub</span>
+            <span class="platform-value">github.com/Elba-programmer</span>
           </span>
         </a>
       </div>
@@ -69,7 +69,7 @@
       <div class="contact-links">
         <div class="contact-link-row">
           <span class="contact-link-label">GitHub</span>
-          <a href="https://github.com/" target="_blank" rel="noopener">github.com/elbaouma</a>
+          <a href="https://github.com/Elba-programmer" target="_blank" rel="noopener">github.com/Elba-programmer</a>
         </div>
         <div class="contact-link-row">
           <span class="contact-link-label">LinkedIn</span>
@@ -82,23 +82,21 @@
       </div>
     </div>
 
-    <div class="contact-form-wrap fade-up delay-1">
-      <form id="contactForm" novalidate>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="your@email.com" required>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
-        </div>
-        <button type="submit" class="btn solid full-width">Send Message →</button>
-        <p class="form-success" id="formSuccess">Message sent! I'll be in touch soon.</p>
-      </form>
+    <div class="contact-form-wrap fade-up delay-1 instant-contact-card">
+      <h2 class="instant-title">Connect Instantly</h2>
+      <p class="instant-desc">For fast responses, project inquiries, or systems engineering work, click below to chat on WhatsApp or call my mobile numbers directly.</p>
+      
+      <div class="instant-actions">
+        <a href="https://wa.me/254746324708" class="btn solid full-width whatsapp-btn" target="_blank" rel="noopener">
+          Message on WhatsApp →
+        </a>
+        <a href="tel:+254746324708" class="btn outline full-width call-btn">
+          Call: +254 746 324 708
+        </a>
+        <a href="tel:+254759282229" class="btn outline full-width call-btn">
+          Call: +254 759 282 229
+        </a>
+      </div>
     </div>
   </section>
 
@@ -108,6 +106,5 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script src="js/forms.js"></script>
 </body>
 </html>
