@@ -48,6 +48,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5500',
     'http://127.0.0.1:5501',   # User's configured VS Code Live Server port
     'http://localhost:5501',
+    'http://localhost:8080',   # Local python HTTP server
+    'http://127.0.0.1:8080',
+    'https://oumaelba.vercel.app', # Live Vercel frontend
 ]
 # When deployed, add your live domain here, e.g.:
 # 'https://elbaouma.github.io'
@@ -73,12 +76,17 @@ else:
 
 ADMIN_DASHBOARD_KEY = os.getenv('ADMIN_DASHBOARD_KEY', '40882153')
 
+import dj_database_url
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -1,3 +1,6 @@
 django>=4.2
 django-cors-headers
 python-dotenv
+gunicorn
+dj-database-url
+psycopg2-binary
