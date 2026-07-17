@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from .models import ContactMessage
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -35,8 +36,10 @@ class ContactView(View):
         if errors:
             return JsonResponse({'errors': errors}, status=400)
 
-        # ── Send notification email to you ────────────────────
+        # ── Save message to database & send email ─────────────
         try:
+            ContactMessage.objects.create(name=name, email=email, message=message)
+
             send_mail(
                 subject=f'[Portfolio] New message from {name}',
                 message=f'Name: {name}\nEmail: {email}\n\nMessage:\n{message}',
@@ -69,7 +72,59 @@ class ContactView(View):
             )
 
     def get(self, request):
-        return JsonResponse({'error': 'Method not allowed.'}, status=405)
+        action = request.GET.get('action')
+        if action == 'forgot':
+            try:
+                send_mail(
+                    subject='[Portfolio] Dashboard Access Key Recovery',
+                    message=(
+                        'Hello,\n\n'
+                        'A request was made to retrieve your portfolio admin dashboard access key.\n\n'
+                        f'Your access key is: {settings.ADMIN_DASHBOARD_KEY}\n\n'
+                        'Please use this key to log in to your custom inbox dashboard at /dashboard.html.\n\n'
+                        'Best regards,\nPortfolio System'
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.OWNER_EMAIL],
+                    fail_silently=False,
+                )
+                return JsonResponse({'success': True, 'message': 'Key retrieval email sent.'}, status=200)
+            except Exception as mail_err:
+                print(f"Failed to send key recovery email: {mail_err}")
+                return JsonResponse({'error': 'Failed to send retrieval email. Try again later.'}, status=500)
+
+        key = request.GET.get('key')
+        if key != settings.ADMIN_DASHBOARD_KEY:
+            return JsonResponse({'error': 'Unauthorized'}, status=401)
+            
+        messages = ContactMessage.objects.all().order_by('-created_at')
+        data = [
+            {
+                'id': msg.id,
+                'name': msg.name,
+                'email': msg.email,
+                'message': msg.message,
+                'created_at': msg.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            } for msg in messages
+        ]
+        return JsonResponse({'success': True, 'messages': data}, status=200)
+
+    def delete(self, request):
+        key = request.GET.get('key')
+        if key != settings.ADMIN_DASHBOARD_KEY:
+            return JsonResponse({'error': 'Unauthorized'}, status=401)
+            
+        msg_id = request.GET.get('id')
+        if not msg_id:
+            return JsonResponse({'error': 'Message ID is required.'}, status=400)
+            
+        try:
+            ContactMessage.objects.get(id=msg_id).delete()
+            return JsonResponse({'success': True, 'message': 'Message deleted.'}, status=200)
+        except ContactMessage.DoesNotExist:
+            return JsonResponse({'error': 'Message not found.'}, status=404)
+
+
 
 
 class HealthView(View):
